@@ -41,4 +41,4 @@ MODE=list bash ./vimeo_hls_cat.sh $(curl -s 'https://player.vimeo.com/video/1811
   | MODE=conv xargs -I{} bash ./vimeo_hls_cat.sh {} ./result$(date +%s)
 ```
 
-> Get hls config dynamically from player
+> Get hls config dynamically from player, parses out hls url with jq, takes lowest quality playlist url (`head -1`), uses it as arg to `cat` mode, uses temp file result as arg to `conv` mode.
