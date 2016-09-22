@@ -36,9 +36,7 @@ MODE=conv bash ./vimeo_hls_cat.sh TEMP_FILE ./result$(date +%s)
 ### Example of everything in unison
 
 ```bash
-MODE=list bash ./vimeo_hls_cat.sh $(curl -s 'https://player.vimeo.com/video/181125561/config' | jq -r .request.files.hls.url)\
-  | head -1 | JOBS=40 MODE=cat xargs bash ./vimeo_hls_cat.sh \
-  | MODE=conv xargs -I{} bash ./vimeo_hls_cat.sh {} ./result$(date +%s)
+MODE=list bash ./vimeo_hls_cat.sh $(curl -s 'https://player.vimeo.com/video/181125561/config' | jq -r .request.files.hls.url) | head -1 | JOBS=40 MODE=cat xargs bash ./vimeo_hls_cat.sh | MODE=conv xargs -I{} bash ./vimeo_hls_cat.sh {} ./result$(date +%s)
 ```
 
 > Get hls config dynamically from player, parses out hls url with jq, takes lowest quality playlist url (`head -1`), uses it as arg to `cat` mode, uses temp file result as arg to `conv` mode.
